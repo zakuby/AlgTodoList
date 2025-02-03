@@ -35,7 +35,16 @@ class AddNewTaskFragment : BaseFragment<FragmentAddNewTaskBinding>(),
     private val viewModel by viewModels<AddNewTaskViewModel>()
 
     override fun FragmentAddNewTaskBinding.initBinding() {
-        editTextInputTitleTask.addTextChangedListener { viewModel.updateTitle(it.toString())}
+        editTextInputTitleTask.addTextChangedListener { text ->
+            val title = text.toString()
+            if (title.lowercase().contains("today")) {
+                val todayTimeMillis = Calendar.getInstance().getTodayDate()
+                onDateTimePicked(todayTimeMillis)
+            } else if (viewModel.isCurrentDatePickedIsToday()) {
+                onDateTimePicked(0L)
+            }
+            viewModel.updateTitle(text.toString())
+        }
         editTextInputDescriptionTask.addTextChangedListener { viewModel.updateDescription(it.toString())}
         switchTimePicker.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -97,15 +106,6 @@ class AddNewTaskFragment : BaseFragment<FragmentAddNewTaskBinding>(),
             viewModel.run {
                 isFormValid().observe(viewLifecycleOwner) {
                     binding?.buttonSave?.isEnabled = it
-                }
-                currentTask.observe(viewLifecycleOwner) { taskEntity ->
-                    val title = taskEntity?.title.orEmpty()
-                    if (title.lowercase().contains("today")) {
-                        val todayTimeMillis = Calendar.getInstance().getTodayDate()
-                        onDateTimePicked(todayTimeMillis)
-                    } else if (viewModel.isCurrentDatePickedIsToday()) {
-                        onDateTimePicked(0L)
-                    }
                 }
             }
         }
