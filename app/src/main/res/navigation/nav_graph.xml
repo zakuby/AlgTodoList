@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/ToDoListFragment">
+
+    <action
+        android:id="@+id/action_to_AddNewTaskFragment"
+        app:destination="@id/AddNewTaskFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    <fragment
+        android:id="@+id/ToDoListFragment"
+        android:name="net.algostudio.todolist.ui.todo_list.TodoListFragment"
+        android:label="@string/todo_list_label"
+        tools:layout="@layout/fragment_todo_list">
+        <action
+            android:id="@+id/action_ToDoListFragment_to_DetailTaskFragment"
+            app:destination="@id/DetailTaskFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"  />
+    </fragment>
+    <fragment
+        android:id="@+id/AddNewTaskFragment"
+        android:name="net.algostudio.todolist.ui.add_new_task.AddNewTaskFragment"
+        android:label="@string/add_new_task_label"
+        tools:layout="@layout/fragment_add_new_task"/>
+    <fragment
+        android:id="@+id/DetailTaskFragment"
+        android:name="net.algostudio.todolist.ui.detail_task.DetailTaskFragment"
+        android:label="@string/detail_task_label"
+        tools:layout="@layout/fragment_detail_task">
+        <argument
+            android:name="taskEntity"
+            app:argType="net.algostudio.todolist.domain.model.TaskEntity" />
+    </fragment>
+</navigation>

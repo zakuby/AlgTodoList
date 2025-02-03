@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">To Do List</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="todo_list_label">To Do List</string>
+    <string name="add_new_task_label">Add New Task</string>
+    <string name="plus_new_task">+New Task</string>
+    <string name="previous">Previous</string>
+    <string name="to_do_list_is_empty">To Do List is empty, please add new task first.</string>
+    <string name="detail_task_label">Detail Task</string>
+    <string name="time_picked"><![CDATA[Time Picked : <font color=\'%1$s\'>%2$s</font>]]></string>
+    <string name="set_time">Set Time</string>
+    <string name="date_picked"><![CDATA[Date Picked : <font color=\'%1$s\'>%2$s</font>]]></string>
+    <string name="time">Time</string>
+</resources>
