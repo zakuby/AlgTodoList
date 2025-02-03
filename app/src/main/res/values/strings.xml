@@ -11,4 +11,15 @@
     <string name="set_time">Set Time</string>
     <string name="date_picked"><![CDATA[Date Picked : <font color=\'%1$s\'>%2$s</font>]]></string>
     <string name="time">Time</string>
+    <string name="delete_confirmation">Delete Confirmation</string>
+    <string name="delete_confirmation_desc">Are you sure you want to delete this task ?</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="title_task">Title Task</string>
+    <string name="description_task">Description Task</string>
+    <string name="select_date">Select Date</string>
+    <string name="pick_time">Pick Time</string>
+    <string name="save">Save</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 </resources>

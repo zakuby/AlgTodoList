@@ -38,6 +38,7 @@ fun TextView.setHTMLText(consent: String) {
         if (VERSION.SDK_INT >= VERSION_CODES.N) {
             Html.fromHtml(consent, Html.FROM_HTML_MODE_LEGACY)
         } else {
+            @Suppress("DEPRECATION")
             Html.fromHtml(consent)
         }, TextView.BufferType.SPANNABLE
     )

@@ -1,10 +1,7 @@
 package net.algostudio.todolist.ui.todo_list
 
 import android.annotation.SuppressLint
-import android.view.GestureDetector
 import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView

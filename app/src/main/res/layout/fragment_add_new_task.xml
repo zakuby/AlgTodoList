@@ -24,7 +24,7 @@
                     android:id="@+id/edit_text_input_title_task"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Title Task"
+                    android:hint="@string/title_task"
                     android:textColorHint="?colorSecondary"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="top"
                     android:minLines="4"
-                    android:hint="Description Task"
+                    android:hint="@string/description_task"
                     android:textColorHint="?colorSecondary"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,7 +56,7 @@
                     android:drawableLeft="@android:drawable/ic_menu_my_calendar"
                     android:drawablePadding="4dp"
                     android:drawableTint="?colorPrimary"
-                    android:hint="Select Date"
+                    android:hint="@string/select_date"
                     android:focusable="false"
                     android:cursorVisible="false"
                     android:textColor="?colorPrimary"
@@ -70,7 +70,7 @@
                 android:drawablePadding="8dp"
                 android:drawableLeft="@android:drawable/ic_lock_idle_alarm"
                 android:drawableTint="?colorPrimary"
-                android:text="Pick Time"
+                android:text="@string/pick_time"
                 android:gravity="center_vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/switch_time_picker"
@@ -95,7 +95,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Cancel"
+        android:text="@string/cancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_save"
         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -106,7 +106,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Save"
+        android:text="@string/save"
         android:enabled="false"
         app:layout_constraintStart_toEndOf="@id/button_cancel"
         app:layout_constraintEnd_toEndOf="parent"

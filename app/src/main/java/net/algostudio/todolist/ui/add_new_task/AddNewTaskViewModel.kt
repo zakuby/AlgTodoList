@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import androidx.lifecycle.switchMap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import net.algostudio.todolist.domain.model.TaskEntity
 import net.algostudio.todolist.domain.usecase.AddNewTaskUseCase

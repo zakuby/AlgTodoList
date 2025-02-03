@@ -14,43 +14,44 @@
             android:id="@+id/tv_detail_title_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="@string/title"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
             android:id="@+id/tv_detail_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Title Task"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_title_label"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Title Task"/>
 
         <TextView
             android:id="@+id/tv_detail_desc_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Description"
+            android:text="@string/description"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
             android:id="@+id/tv_detail_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description Task"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_desc_label"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Description Task"/>
 
         <ImageView
             android:id="@+id/iv_detail_date_picked"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:importantForAccessibility="no"
             android:src="@android:drawable/ic_menu_my_calendar"
             app:tint="?colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,6 +73,7 @@
             android:id="@+id/iv_detail_time_picked"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:importantForAccessibility="no"
             android:src="@android:drawable/ic_lock_idle_alarm"
             app:tint="?colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Time Picked : "
+            android:text="@string/time"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/iv_detail_time_picked"
