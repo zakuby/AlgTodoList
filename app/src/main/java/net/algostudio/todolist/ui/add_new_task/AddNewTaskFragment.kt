@@ -1,8 +1,5 @@
 package net.algostudio.todolist.ui.add_new_task
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
@@ -24,7 +21,8 @@ import java.util.Calendar
 
 
 @AndroidEntryPoint
-class AddNewTaskFragment : BaseFragment<FragmentAddNewTaskBinding>() {
+class AddNewTaskFragment : BaseFragment<FragmentAddNewTaskBinding>(),
+    AddNewTaskDialogPicker by AddNewTaskDialogPickerImpl() {
 
     companion object {
         const val REQUEST_KEY = "request_add_new_task"
@@ -37,29 +35,39 @@ class AddNewTaskFragment : BaseFragment<FragmentAddNewTaskBinding>() {
     private val viewModel by viewModels<AddNewTaskViewModel>()
 
     override fun FragmentAddNewTaskBinding.initBinding() {
-        editTextInputTitleTask.addTextChangedListener { text ->
-            val title = text.toString()
-            if (title.lowercase().contains("today")){
-                val todayTimeMillis = Calendar.getInstance().getTodayDate()
-                onDateTimePicked(todayTimeMillis)
-            } else if (viewModel.isCurrentDatePickedIsToday()) {
-                onDateTimePicked(0L)
-            }
-            viewModel.updateTitle(text.toString())
-        }
-        editTextInputDescriptionTask.addTextChangedListener { text ->
-            viewModel.updateDescription(text.toString())
-        }
+        editTextInputTitleTask.addTextChangedListener { viewModel.updateTitle(it.toString())}
+        editTextInputDescriptionTask.addTextChangedListener { viewModel.updateDescription(it.toString())}
         switchTimePicker.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                showTimerPickerDialog()
+                showTimerPickerDialog(
+                    requireContext(),
+                    onCancelListener = {
+                        switchTimePicker.isChecked = false
+                    },
+                    onTimePicked = { time ->
+                        val colorPrimaryHex = requireContext().getAttrColorPrimaryHex()
+                        viewModel.updateTimePicked(time)
+                        tvTimePicked.setHTMLText(
+                            requireContext().getString(
+                                R.string.time_picked,
+                                colorPrimaryHex,
+                                time
+                            )
+                        )
+                    }
+                )
             } else {
-                binding?.tvTimePicked?.text = getString(R.string.time)
+                tvTimePicked.text = getString(R.string.time)
                 viewModel.updateTimePicked("")
             }
         }
 
-        editTextSelectDate.setOnClickListener { showDatePickerDialog() }
+        editTextSelectDate.setOnClickListener {
+            showDatePickerDialog(
+                requireContext(),
+                onDateTimePicked = { onDateTimePicked(it) }
+            )
+        }
         buttonCancel.setOnClickListener { findNavController().popBackStack() }
         buttonSave.setOnClickListener {
             viewModel.addNewTask()
@@ -73,24 +81,7 @@ class AddNewTaskFragment : BaseFragment<FragmentAddNewTaskBinding>() {
         }
     }
 
-    private fun showDatePickerDialog(){
-        val calendar = Calendar.getInstance()
-        val datePickerDialog = DatePickerDialog(
-            requireContext(), { _, year, month, dayOfMonth ->
-                calendar.apply {
-                    set(year, month, dayOfMonth, 0, 0, 0)
-                    set(Calendar.MILLISECOND, 0)
-                }
-                onDateTimePicked(calendar.timeInMillis)
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
-        datePickerDialog.show()
-    }
-
-    private fun onDateTimePicked(pickedDateTimeMillis: Long){
+    private fun onDateTimePicked(pickedDateTimeMillis: Long) {
         if (pickedDateTimeMillis == 0L) {
             binding?.editTextSelectDate?.text?.clear()
         } else {
@@ -100,51 +91,22 @@ class AddNewTaskFragment : BaseFragment<FragmentAddNewTaskBinding>() {
         viewModel.updateDatePicked(pickedDateTimeMillis)
     }
 
-    private fun showTimerPickerDialog() {
-        val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-
-        val myTimeListener =
-            OnTimeSetListener { view, hourOfDay, minuteListener ->
-                if (view.isShown) {
-                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                    calendar.set(Calendar.MINUTE, minuteListener)
-                    val actualHour = if (hourOfDay < 10) "0$hourOfDay" else hourOfDay
-                    val actualMinute = if (minuteListener < 10) "0$minuteListener" else minuteListener
-                    val time = "$actualHour:$actualMinute"
-                    viewModel.updateTimePicked(time)
-                    val colorPrimaryHex = requireContext().getAttrColorPrimaryHex()
-                    binding?.tvTimePicked?.setHTMLText(
-                        requireContext().getString(
-                            R.string.time_picked,
-                            colorPrimaryHex,
-                            time
-                        )
-                    )
-                }
-            }
-        TimePickerDialog(
-            requireContext(),
-            R.style.DatePickerTheme,
-            myTimeListener,
-            hour,
-            minute,
-            true
-        ).apply {
-            setTitle(getString(R.string.set_time))
-            setOnCancelListener {
-                binding?.switchTimePicker?.isChecked = false
-            }
-            show()
-        }
-    }
-
     override fun initObserver() {
         super.initObserver()
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isFormValid().observe(viewLifecycleOwner) {
-                binding?.buttonSave?.isEnabled = it
+            viewModel.run {
+                isFormValid().observe(viewLifecycleOwner) {
+                    binding?.buttonSave?.isEnabled = it
+                }
+                currentTask.observe(viewLifecycleOwner) { taskEntity ->
+                    val title = taskEntity?.title.orEmpty()
+                    if (title.lowercase().contains("today")) {
+                        val todayTimeMillis = Calendar.getInstance().getTodayDate()
+                        onDateTimePicked(todayTimeMillis)
+                    } else if (viewModel.isCurrentDatePickedIsToday()) {
+                        onDateTimePicked(0L)
+                    }
+                }
             }
         }
     }

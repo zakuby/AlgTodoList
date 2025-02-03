@@ -12,7 +12,7 @@ class DeleteConfirmationDialog(
     private val onConfirmDelete: () -> Unit = {}
 ) : BottomSheetDialogFragment() {
 
-    lateinit var binding: DialogDeleteConfirmationBinding
+    private lateinit var binding: DialogDeleteConfirmationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

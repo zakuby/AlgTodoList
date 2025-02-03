@@ -17,20 +17,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    private val navController by lazy { findNavController(R.id.nav_host_fragment_content_main) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.apply {
-            fab.setOnClickListener {
-                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_to_AddNewTaskFragment)
-            }
-        }
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
+        binding.initListener()
+    }
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+    private fun ActivityMainBinding.initListener(){
+        fab.setOnClickListener {
+            findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_to_AddNewTaskFragment)
+        }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.fab.isVisible = destination.id == R.id.ToDoListFragment
         }
