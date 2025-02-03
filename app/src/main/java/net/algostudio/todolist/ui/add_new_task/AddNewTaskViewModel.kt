@@ -62,7 +62,7 @@ class AddNewTaskViewModel @Inject constructor(
     }
 
     fun isFormValid() = _currentTask.map { task ->
-        task != null && task.title.isNotEmpty() && task.date != 0L
+        task != null && task.title.isNotEmpty() && task.description.isNotEmpty() && task.date != 0L
     }
 
     fun addNewTask() = currentTask.value?.let { useCase.invoke(it) }
